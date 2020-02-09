@@ -33,11 +33,11 @@ from setuptools import setup, find_packages
 
 import riri5
 
-if sys.version_info < (2, 7):
-    print('ERROR: lgrass requires at least Python 2.7 to run.')
+if sys.version_info < (3, 7):
+    print('ERROR: lgrass requires at least Python 3.7 to run.')
     sys.exit(1)
 
-if sys.version_info >= (3, 0):
+if sys.version_info >= (3, 7):
     print('WARNING: lgrass has not been tested with Python 3.')
 
 pkg_resources.require('numpy')#, 'VPlants.Lpy', 'VPlants.PlantGL')#('numpy>=1.11.0', 'pandas>=0.18.0', 'sphinx>=1.4.8', 'VPlants.Lpy', 'VPlants.PlantGL', 'OpenAlea.Mtg')
@@ -53,7 +53,7 @@ setup(
     author = "G. Louarn, D. Combes",
     author_email = "gaetan.louarn@inra.fr",
     description = "A simplified model of radiative transfer based on RATP",
-    long_description = read('README.md'),
+    #long_description = read('README.md'),
     license = "CeCILL-C",
     keywords = "turbid medium, light transfer ",
     url = "https://sourcesup.renater.fr/projects/riri5/",
