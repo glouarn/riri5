@@ -43,8 +43,11 @@ To install and use *RIRI5*, you need first to install the dependencies.
 
 To run a simulation example :
 
-* 1. 
-  2. 
+* 1. place yourself in folder `riri5\riri5\test`
+  2. run from the console:
+		```bash
+        python test_riri_homogene.py
+        ```
 
 ## 2. Reading the docs
 
