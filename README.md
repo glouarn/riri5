@@ -47,6 +47,7 @@ To run a simulation example :
   2. run from the console:
 		```bash
         python test_riri_homogene.py
+		python test_riri.py
         ```
 
 ## 2. Reading the docs
