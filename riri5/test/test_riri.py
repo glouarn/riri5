@@ -43,6 +43,7 @@ print('I0:',I0)
 
 print('res_abs par espece:', [np.sum(res_abs_i[0])/surf_sol, np.sum(res_abs_i[1])/surf_sol])
 print('transmis sol:', np.sum(res_trans[-1])/surf_sol)
+print("!!! dx=dy=2dz doit etre respecte (pas renseigne) !!!")
 print("")
 
 
@@ -70,6 +71,7 @@ print('I0:',I0)
 
 print('res_abs par espece:', [np.sum(res_abs_i[0])/surf_sol, np.sum(res_abs_i[1])/surf_sol])
 print('transmis sol:', np.sum(res_trans[-1])/surf_sol)
+print("!!! dx=dy=2dz doit etre respecte (pas renseigne) !!!")
 print("")
 
 #rq: calcul fait pour un hmax (hauteur voxel) suppose respecte les hypothese de riri5: 

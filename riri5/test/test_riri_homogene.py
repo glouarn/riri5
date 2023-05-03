@@ -54,7 +54,7 @@ ls_distf = [dist1, dist2, dist3]
 
 
 # coord voxels passages rayons
-opt_direction = 'VXpXmYpYm'#'V' 
+opt_direction = 'V' #'VXpXmYpYm'#
 triplets = riri.get_ls_triplets(m_lai1, opt=opt_direction)
 #triplets = riri.get_ls_triplets(m_lai1, opt='V')
 #triplets = riri.get_ls_triplets(m_lai1, opt='VXpXmYpYm')
@@ -184,6 +184,7 @@ print('I0:',I0)
 #print('res_abs3', res_abs_i[2])
 print('res_abs par espece:', [np.sum(res_abs_i[0]), np.sum(res_abs_i[1]), np.sum(res_abs_i[2])])
 print('transmis sol:', np.sum(res_trans[-1]))
+print('!!! dx=dy=2dz pas respecte !!')
 print("")
 
 
@@ -247,9 +248,10 @@ ls_distf = [dist1, dist2, dist3]
 
 
 # coord voxels passages rayons
-opt_direction = 'VXpXmYpYm'#'V' #
+opt_direction = 'V' #'VXpXmYpYm'#
 triplets = riri.get_ls_triplets(m_lai1, opt=opt_direction)
-
+#!!! presuppose dx=dy=dz / tan(0.4637) = 2*dz pour traversee de biais!
+#ps respecte ici
 
 
 res_trans, res_abs_i = riri.calc_extinc_allray_multi_reduced(ls_mlai, triplets ,ls_distf , I0=100, opt=opt_direction)
@@ -268,4 +270,5 @@ print('I0:',I0)
 print('res_abs par espece:', [np.sum(res_abs_i[0]), np.sum(res_abs_i[1]), np.sum(res_abs_i[2])])
 print('transmis sol:', np.sum(res_trans[-1]))
 print("")
+
 
