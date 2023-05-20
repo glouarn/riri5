@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>riri5 package &mdash; RIRI5 1.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            RIRI5
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">riri5 package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-riri5.RIRI5">riri5.RIRI5 module</a><ul>
+<li><a class="reference internal" href="#riri5-a-3d-turbid-medium-model-adapted-from-ratp-model-simplified-for-a-5-directions-sky-turtle-diffuse-light-only">RIRI5: A 3D Turbid medium model adapted from RATP model- simplified for a  5 directions sky turtle(diffuse light only)</a></li>
+<li><a class="reference internal" href="#riri5.RIRI5.WhichVoxel"><code class="docutils literal notranslate"><span class="pre">WhichVoxel()</span></code></a></li>
+<li><a class="reference internal" href="#riri5.RIRI5.calc_extinc_allray_multi"><code class="docutils literal notranslate"><span class="pre">calc_extinc_allray_multi()</span></code></a></li>
+<li><a class="reference internal" href="#riri5.RIRI5.calc_extinc_allray_multi_reduced"><code class="docutils literal notranslate"><span class="pre">calc_extinc_allray_multi_reduced()</span></code></a></li>
+<li><a class="reference internal" href="#riri5.RIRI5.calc_extinc_ray_multi"><code class="docutils literal notranslate"><span class="pre">calc_extinc_ray_multi()</span></code></a></li>
+<li><a class="reference internal" href="#riri5.RIRI5.def_na_lims"><code class="docutils literal notranslate"><span class="pre">def_na_lims()</span></code></a></li>
+<li><a class="reference internal" href="#riri5.RIRI5.disttetaf"><code class="docutils literal notranslate"><span class="pre">disttetaf()</span></code></a></li>
+<li><a class="reference internal" href="#riri5.RIRI5.get_ls_triplets"><code class="docutils literal notranslate"><span class="pre">get_ls_triplets()</span></code></a></li>
+<li><a class="reference internal" href="#riri5.RIRI5.get_tripletVert"><code class="docutils literal notranslate"><span class="pre">get_tripletVert()</span></code></a></li>
+<li><a class="reference internal" href="#riri5.RIRI5.get_tripletX"><code class="docutils literal notranslate"><span class="pre">get_tripletX()</span></code></a></li>
+<li><a class="reference internal" href="#riri5.RIRI5.get_tripletY"><code class="docutils literal notranslate"><span class="pre">get_tripletY()</span></code></a></li>
+<li><a class="reference internal" href="#riri5.RIRI5.k_teta_DC"><code class="docutils literal notranslate"><span class="pre">k_teta_DC()</span></code></a></li>
+<li><a class="reference internal" href="#riri5.RIRI5.k_teta_distf"><code class="docutils literal notranslate"><span class="pre">k_teta_distf()</span></code></a></li>
+<li><a class="reference internal" href="#riri5.RIRI5.rfr_calc_relatif"><code class="docutils literal notranslate"><span class="pre">rfr_calc_relatif()</span></code></a></li>
+<li><a class="reference internal" href="#riri5.RIRI5.schnute"><code class="docutils literal notranslate"><span class="pre">schnute()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-riri5">Module contents</a><ul>
+<li><a class="reference internal" href="#riri5-model">riri5 model</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">RIRI5</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">riri5 package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/source/riri5.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="riri5-package">
+<h1>riri5 package<a class="headerlink" href="#riri5-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-riri5.RIRI5">
+<span id="riri5-riri5-module"></span><h2>riri5.RIRI5 module<a class="headerlink" href="#module-riri5.RIRI5" title="Permalink to this heading"></a></h2>
+<section id="riri5-a-3d-turbid-medium-model-adapted-from-ratp-model-simplified-for-a-5-directions-sky-turtle-diffuse-light-only">
+<h3>RIRI5: A 3D Turbid medium model adapted from RATP model- simplified for a  5 directions sky turtle(diffuse light only)<a class="headerlink" href="#riri5-a-3d-turbid-medium-model-adapted-from-ratp-model-simplified-for-a-5-directions-sky-turtle-diffuse-light-only" title="Permalink to this heading"></a></h3>
+<p>Authors: G. Louarn / D. Combes - Mai 2014</p>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="riri5.RIRI5.WhichVoxel">
+<span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">WhichVoxel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_grid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">na</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dxyz</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#WhichVoxel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.WhichVoxel" title="Permalink to this definition"></a></dt>
+<dd><p>Determine in which voxel of a 3D grid is located a point ‘p’</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p</strong> (<em>array</em>) – point [x,y,z] to be located</p></li>
+<li><p><strong>origin_grid</strong> (<em>array</em>) – grid origin [xorigin, yorigin, zorigin]</p></li>
+<li><p><strong>na</strong> (<em>list</em>) – number of voxels per direction : [nx, ny, nz]</p></li>
+<li><p><strong>dxyz</strong> (<em>list</em>) – voxel size : [dx, dy, dz]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of integer corresponding to the voxel ids [x,y,z] in the 3D grid (for Z, id=0 corresponds to the top of the grid/canopy)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="riri5.RIRI5.calc_extinc_allray_multi">
+<span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">calc_extinc_allray_multi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ls_mlai</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ls_triplets_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ls_distf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">I0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optsky</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#calc_extinc_allray_multi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.calc_extinc_allray_multi" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate light extinction and absoption per species for a series of beams</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="riri5.RIRI5.calc_extinc_allray_multi_reduced">
+<span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">calc_extinc_allray_multi_reduced</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ls_mlai</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ls_triplets_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ls_distf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">I0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optsky</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'VXpXmYpYm'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#calc_extinc_allray_multi_reduced"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.calc_extinc_allray_multi_reduced" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate light extinction and absoption per species for a series of beams, avoiding calculation in empty voxels above the canopy</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="riri5.RIRI5.calc_extinc_ray_multi">
+<span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">calc_extinc_ray_multi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ls_vlai</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">I0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ls_k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#calc_extinc_ray_multi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.calc_extinc_ray_multi" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate light extinction and absoption per species for a beam going through a series of voxels</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="riri5.RIRI5.def_na_lims">
+<span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">def_na_lims</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dz_ini</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Hmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'3D'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#def_na_lims"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.def_na_lims" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the number of voxels per direction and the limits of the voxels in a 3D grid respecting the ratio 2 asumption, given a pattern8, dz_ini and Hmax (in cm)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pattern8</strong> (<em>list</em>) – A list of two [x,y] coordinates setting the upper corner and lower corner of the scene/grid</p></li>
+<li><p><strong>dz_ini</strong> (<em>float</em>) – targeted dz of the grid, which is then adpated if it does not fit with the ratio asumption</p></li>
+<li><p><strong>Hmax</strong> (<em>float</em>) – targeted Hmax of the grid, which is then adpated if it does not fit with the ratio asumption</p></li>
+<li><p><strong>opt</strong> (<em>string</em>) – either ‘3D’ for a 3D grid or ‘1D’ for a vertical one dimention grid</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>“number of voxels” : [nx, ny, nz]</p></li>
+<li><p>”voxel size” : [dx, dy, dz]</p></li>
+<li><p>”3 lists of voxel limits” : [xlims,ylims,zlims]</p></li>
+<li><p>”grid origin” : [xorigin, yorigin, zorigin]</p></li>
+<li><p>”reference surface of a voxel (m2)”</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="riri5.RIRI5.disttetaf">
+<span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">disttetaf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#disttetaf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.disttetaf" title="Permalink to this definition"></a></dt>
+<dd><p>Distribute normal leaf angle ditribution into discrete regular elevation classes - A python version of ‘dist_tetaf.r’</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="riri5.RIRI5.get_ls_triplets">
+<span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">get_ls_triplets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'VXpXmYpYm'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#get_ls_triplets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.get_ls_triplets" title="Permalink to this definition"></a></dt>
+<dd><p>List of triplet voxel IDs for all beams in X plane, Y plane and vertical direction</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="riri5.RIRI5.get_tripletVert">
+<span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">get_tripletVert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nz</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#get_tripletVert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.get_tripletVert" title="Permalink to this definition"></a></dt>
+<dd><p>List of triplet voxel IDs for vertical beams</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="riri5.RIRI5.get_tripletX">
+<span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">get_tripletX</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xdeb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'+'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#get_tripletX"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.get_tripletX" title="Permalink to this definition"></a></dt>
+<dd><p>List of triplet voxel IDs for beams in X plane</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="riri5.RIRI5.get_tripletY">
+<span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">get_tripletY</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ydeb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ny</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'+'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#get_tripletY"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.get_tripletY" title="Permalink to this definition"></a></dt>
+<dd><p>List of triplet voxel IDs for beams in Y plane</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="riri5.RIRI5.k_teta_DC">
+<span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">k_teta_DC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean_incl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elevations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[9.23,</span> <span class="pre">10.81,</span> <span class="pre">26.57,</span> <span class="pre">31.08,</span> <span class="pre">47.41,</span> <span class="pre">52.62,</span> <span class="pre">69.16,</span> <span class="pre">90]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#k_teta_DC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.k_teta_DC" title="Permalink to this definition"></a></dt>
+<dd><p>Computes extinction coefficient from mean elevation angle according to SIRASCA model (p210-211, “Crop stucture and light microclimate” book)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mean_incl</strong> (<em>float</em>) – mean elevation angle of leaves (degres)</p></li>
+<li><p><strong>elevations</strong> (<em>list</em>) – list of elevation classes to consider for discretisation (degres)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of …</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="riri5.RIRI5.k_teta_distf">
+<span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">k_teta_distf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">teta_beam</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_class_teta_f</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#k_teta_distf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.k_teta_distf" title="Permalink to this definition"></a></dt>
+<dd><p>Computes extinction coefficient for a given beam integrating ditribution of leaf area into leaf elevation classes</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="riri5.RIRI5.rfr_calc_relatif">
+<span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">rfr_calc_relatif</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relI0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.09</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.59</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#rfr_calc_relatif"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.rfr_calc_relatif" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate Red:Far red ratio from relative transmitted PAR - function and parameter values according to Escobar et al (2009) (Agricultural and Forest Meteorology, 149(8), 1244-1253)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="riri5.RIRI5.schnute">
+<span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">schnute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#schnute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.schnute" title="Permalink to this definition"></a></dt>
+<dd><p>General Schnute function</p>
+</dd></dl>
+
+</section>
+<section id="module-riri5">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-riri5" title="Permalink to this heading"></a></h2>
+<section id="riri5-model">
+<h3>riri5 model<a class="headerlink" href="#riri5-model" title="Permalink to this heading"></a></h3>
+<p>The RIRI model in python for Virtual Grassland</p>
+<dl class="field-list simple">
+<dt class="field-odd">copyright<span class="colon">:</span></dt>
+<dd class="field-odd"><p>TODO</p>
+</dd>
+<dt class="field-even">license<span class="colon">:</span></dt>
+<dd class="field-even"><p>Cecill-Cecill-C</p>
+</dd>
+</dl>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, G. Louarn.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
