@@ -43,7 +43,7 @@
 <li><a class="reference internal" href="#">riri5 package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-riri5.RIRI5">riri5.RIRI5 module</a><ul>
-<li><a class="reference internal" href="#riri5-a-3d-turbid-medium-model-adapted-from-ratp-model-simplified-for-a-5-directions-sky-turtle-diffuse-light-only">RIRI5: A 3D Turbid medium model adapted from RATP model- simplified for a  5 directions sky turtle(diffuse light only)</a></li>
+<li><a class="reference internal" href="#riri5-a-3d-turbid-medium-model-adapted-from-ratp-model-simplified-for-a-5-directions-sky-turtle">RIRI5: A 3D Turbid medium model adapted from RATP model- simplified for a  5 directions sky turtle</a></li>
 <li><a class="reference internal" href="#riri5.RIRI5.WhichVoxel"><code class="docutils literal notranslate"><span class="pre">WhichVoxel()</span></code></a></li>
 <li><a class="reference internal" href="#riri5.RIRI5.calc_extinc_allray_multi"><code class="docutils literal notranslate"><span class="pre">calc_extinc_allray_multi()</span></code></a></li>
 <li><a class="reference internal" href="#riri5.RIRI5.calc_extinc_allray_multi_reduced"><code class="docutils literal notranslate"><span class="pre">calc_extinc_allray_multi_reduced()</span></code></a></li>
@@ -99,9 +99,15 @@
 </section>
 <section id="module-riri5.RIRI5">
 <span id="riri5-riri5-module"></span><h2>riri5.RIRI5 module<a class="headerlink" href="#module-riri5.RIRI5" title="Permalink to this heading"></a></h2>
-<section id="riri5-a-3d-turbid-medium-model-adapted-from-ratp-model-simplified-for-a-5-directions-sky-turtle-diffuse-light-only">
-<h3>RIRI5: A 3D Turbid medium model adapted from RATP model- simplified for a  5 directions sky turtle(diffuse light only)<a class="headerlink" href="#riri5-a-3d-turbid-medium-model-adapted-from-ratp-model-simplified-for-a-5-directions-sky-turtle-diffuse-light-only" title="Permalink to this heading"></a></h3>
+<section id="riri5-a-3d-turbid-medium-model-adapted-from-ratp-model-simplified-for-a-5-directions-sky-turtle">
+<h3>RIRI5: A 3D Turbid medium model adapted from RATP model- simplified for a  5 directions sky turtle<a class="headerlink" href="#riri5-a-3d-turbid-medium-model-adapted-from-ratp-model-simplified-for-a-5-directions-sky-turtle" title="Permalink to this heading"></a></h3>
 <p>Authors: G. Louarn / D. Combes - Mai 2014</p>
+<ul class="simple">
+<li><p>Considers diffuse light only (soc / uoc)</p></li>
+<li><p>Considers beam elevations of a minimal hemispheric turtle with 6 faces: 1 vertical direction + 1 elevation ring</p></li>
+<li><p>Considers only beams crossing by voxel diagonals into (x,y) and (y,z) planes : 1 vertical beam + 4 for diagonal beams = 5 directions sampled</p></li>
+<li><p>This imposes a voxel size and a 3D drid respecting : dx = dy = dz/tan(0.4637) = 2*dz</p></li>
+</ul>
 </section>
 <dl class="py function">
 <dt class="sig sig-object py" id="riri5.RIRI5.WhichVoxel">
@@ -126,24 +132,77 @@
 <dt class="sig sig-object py" id="riri5.RIRI5.calc_extinc_allray_multi">
 <span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">calc_extinc_allray_multi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ls_mlai</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ls_triplets_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ls_distf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">I0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optsky</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#calc_extinc_allray_multi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.calc_extinc_allray_multi" title="Permalink to this definition"></a></dt>
 <dd><p>Calculate light extinction and absoption per species for a series of beams</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ls_mlai</strong> (<em>list</em>) – List of 3D grids for LAI distribution (Leaf Are Index, unit: m2.m-2) per species</p></li>
+<li><p><strong>ls_triplets_dir</strong> (<em>list of</em>) – List of list of triplet voxel indices [zz, yy, xx] for the different beam directions considered</p></li>
+<li><p><strong>ls_distf</strong> (<em>list</em>) – List of dist_class_teta_f (relative distribution of leaf area in elevation classes) by species</p></li>
+<li><p><strong>I0</strong> (<em>float</em>) – Incoming light (unit: )</p></li>
+<li><p><strong>optsky</strong> (<em>string</em>) – Option for diffuse sky, relative light distribution with elevation angle; either ‘soc’ or ‘uoc’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>“res_trans: ” : array</p></li>
+<li><p>”res_abs_i: ” : list of arrays</p></li>
+</ul>
+</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="riri5.RIRI5.calc_extinc_allray_multi_reduced">
 <span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">calc_extinc_allray_multi_reduced</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ls_mlai</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ls_triplets_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ls_distf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">I0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optsky</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'VXpXmYpYm'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#calc_extinc_allray_multi_reduced"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.calc_extinc_allray_multi_reduced" title="Permalink to this definition"></a></dt>
 <dd><p>Calculate light extinction and absoption per species for a series of beams, avoiding calculation in empty voxels above the canopy</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ls_mlai</strong> (<em>list</em>) – List of 3D grids for LAI distribution (Leaf Are Index, unit: m2.m-2) per species</p></li>
+<li><p><strong>ls_triplets_dir</strong> (<em>list of</em>) – List of list of triplet voxel indices [zz, yy, xx] for the different beam directions considered</p></li>
+<li><p><strong>ls_distf</strong> (<em>list</em>) – List of dist_class_teta_f (relative distribution of leaf area in elevation classes) by species</p></li>
+<li><p><strong>I0</strong> (<em>float</em>) – Incoming light (unit: )</p></li>
+<li><p><strong>optsky</strong> (<em>string</em>) – Option for diffuse sky, relative light distribution with elevation angle; either ‘soc’ or ‘uoc’</p></li>
+<li><p><strong>opt</strong> (<em>string</em>) – A string to indicate which beam direction to be considered; either ‘VXpXmYpYm’ (5 directions) or ‘V’ (vertical beam only)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>“res_trans: ” : array</p></li>
+<li><p>”res_abs_i: ” : list of arrays</p></li>
+</ul>
+</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="riri5.RIRI5.calc_extinc_ray_multi">
 <span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">calc_extinc_ray_multi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ls_vlai</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">I0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ls_k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#calc_extinc_ray_multi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.calc_extinc_ray_multi" title="Permalink to this definition"></a></dt>
 <dd><p>Calculate light extinction and absoption per species for a beam going through a series of voxels</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ls_vlai</strong> (<em>array</em>) – List of partial LAI (Leaf Are Index, unit: m2.m-2) per species for the series of voxels crossed by the beam</p></li>
+<li><p><strong>I0</strong> (<em>float</em>) – Incoming light from the beam angular sector (unit: )</p></li>
+<li><p><strong>ls_k</strong> (<em>array</em>) – List of extinction coefficients per species (unitless)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>“res_trans: ” : array</p></li>
+<li><p>”res_abs_i: ” : list of arrays</p></li>
+</ul>
+</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="riri5.RIRI5.def_na_lims">
-<span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">def_na_lims</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dz_ini</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Hmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'3D'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#def_na_lims"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.def_na_lims" title="Permalink to this definition"></a></dt>
-<dd><p>Calculate the number of voxels per direction and the limits of the voxels in a 3D grid respecting the ratio 2 asumption, given a pattern8, dz_ini and Hmax (in cm)</p>
+<span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">def_na_lims</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dz_ini</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Hmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'3D'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cm'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#def_na_lims"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.def_na_lims" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the number of voxels per direction and the limits of the voxels in a 3D grid respecting the ratio asumption of RIRI5, given a pattern8, dz_ini and Hmax</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -151,6 +210,7 @@
 <li><p><strong>dz_ini</strong> (<em>float</em>) – targeted dz of the grid, which is then adpated if it does not fit with the ratio asumption</p></li>
 <li><p><strong>Hmax</strong> (<em>float</em>) – targeted Hmax of the grid, which is then adpated if it does not fit with the ratio asumption</p></li>
 <li><p><strong>opt</strong> (<em>string</em>) – either ‘3D’ for a 3D grid or ‘1D’ for a vertical one dimention grid</p></li>
+<li><p><strong>unit</strong> (<em>string</em>) – unit used for input lengths : either ‘cm’ or ‘m’</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -169,31 +229,95 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="riri5.RIRI5.disttetaf">
 <span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">disttetaf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#disttetaf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.disttetaf" title="Permalink to this definition"></a></dt>
-<dd><p>Distribute normal leaf angle ditribution into discrete regular elevation classes - A python version of ‘dist_tetaf.r’</p>
+<dd><p>Distribute leaf angle normal ditribution into discrete regular elevation classes - A python version of ‘dist_tetaf.r’</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mf</strong> (<em>float</em>) – mean elevation (degre)</p></li>
+<li><p><strong>sdf</strong> (<em>float</em>) – stadard deviation of the normal distribution (degree)</p></li>
+<li><p><strong>nbs</strong> (<em>integer</em>) – number of random drawings to generate de districution</p></li>
+<li><p><strong>seed</strong> (<em>integer</em>) – seed number for the random number generator</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list with relative leaf area distribution in 9 elevation angle classes : [5,15,25,35,45,55,65,75,85]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="riri5.RIRI5.get_ls_triplets">
 <span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">get_ls_triplets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'VXpXmYpYm'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#get_ls_triplets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.get_ls_triplets" title="Permalink to this definition"></a></dt>
 <dd><p>List of triplet voxel IDs for all beams in X plane, Y plane and vertical direction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mat</strong> (<em>array</em>) – a 3D grid of format</p></li>
+<li><p><strong>opt</strong> (<em>string</em>) – A string to indicate which beam direction to be considered; either ‘VXpXmYpYm’ (5 directions) or ‘V’ (vertical beam only)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of 3 lists with voxel indices [zz, yy, xx] of the beams path</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="riri5.RIRI5.get_tripletVert">
 <span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">get_tripletVert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nz</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#get_tripletVert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.get_tripletVert" title="Permalink to this definition"></a></dt>
 <dd><p>List of triplet voxel IDs for vertical beams</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>integer</em>) – x voxel ID</p></li>
+<li><p><strong>y</strong> (<em>integer</em>) – y voxel ID</p></li>
+<li><p><strong>nz</strong> (<em>integer</em>) – number of voxels along z in the plane</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of 3 lists with voxel indices [zz, yy, xx] of the beams path</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="riri5.RIRI5.get_tripletX">
 <span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">get_tripletX</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xdeb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'+'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#get_tripletX"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.get_tripletX" title="Permalink to this definition"></a></dt>
-<dd><p>List of triplet voxel IDs for beams in X plane</p>
+<dd><p>List of triplet voxel IDs for beams in X plane (x,z)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xdeb</strong> (<em>integer</em>) – initial beam position, ID along x</p></li>
+<li><p><strong>y</strong> (<em>integer</em>) – y voxel ID</p></li>
+<li><p><strong>nx</strong> (<em>integer</em>) – number of voxels along x in the plane</p></li>
+<li><p><strong>nz</strong> (<em>integer</em>) – number of voxels along z in the plane</p></li>
+<li><p><strong>sens</strong> (<em>string</em>) – Direction of the diagonal beams with respect to vertical; either ‘+’ or ‘-’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of 3 lists with voxel indices [zz, yy, xx] of the beams path</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="riri5.RIRI5.get_tripletY">
 <span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">get_tripletY</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ydeb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ny</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'+'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#get_tripletY"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.get_tripletY" title="Permalink to this definition"></a></dt>
-<dd><p>List of triplet voxel IDs for beams in Y plane</p>
+<dd><p>List of triplet voxel IDs for beams in Y plane (y,z)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ydeb</strong> (<em>integer</em>) – initial beam position, ID along y</p></li>
+<li><p><strong>x</strong> (<em>integer</em>) – x voxel ID</p></li>
+<li><p><strong>ny</strong> (<em>integer</em>) – number of voxels along y in the plane</p></li>
+<li><p><strong>nz</strong> (<em>integer</em>) – number of voxels along z in the plane</p></li>
+<li><p><strong>sens</strong> (<em>string</em>) – Direction of the diagonal beams with respect to vertical; either ‘+’ or ‘-’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of 3 lists with voxel indices [zz, yy, xx] of the beams path</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -203,8 +327,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>mean_incl</strong> (<em>float</em>) – mean elevation angle of leaves (degres)</p></li>
-<li><p><strong>elevations</strong> (<em>list</em>) – list of elevation classes to consider for discretisation (degres)</p></li>
+<li><p><strong>mean_incl</strong> (<em>float</em>) – mean elevation angle of leaves (degree)</p></li>
+<li><p><strong>elevations</strong> (<em>list</em>) – list of beam elevation classes to consider for integration (degres); default=elevation for turtle with 46 directions</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -216,13 +340,36 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="riri5.RIRI5.k_teta_distf">
 <span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">k_teta_distf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">teta_beam</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_class_teta_f</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#k_teta_distf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.k_teta_distf" title="Permalink to this definition"></a></dt>
-<dd><p>Computes extinction coefficient for a given beam integrating ditribution of leaf area into leaf elevation classes</p>
+<dd><p>Computes extinction coefficient for a given beam integrating the ditribution of leaf area of a species into leaf elevation classes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>teta_beam</strong> (<em>float</em>) – Beam elevation with respect to horizontal plane (degree)</p></li>
+<li><p><strong>dist_class_teta_f</strong> (<em>list</em>) – relative distribution of leaf area in elevation classes ; 9 classes in degrees, with centers [5,15,25,35,45,55,65,75,85]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Calculated extinction coefficient</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="riri5.RIRI5.rfr_calc_relatif">
 <span class="sig-prename descclassname"><span class="pre">riri5.RIRI5.</span></span><span class="sig-name descname"><span class="pre">rfr_calc_relatif</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relI0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.09</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.59</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/riri5/RIRI5.html#rfr_calc_relatif"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#riri5.RIRI5.rfr_calc_relatif" title="Permalink to this definition"></a></dt>
-<dd><p>Calculate Red:Far red ratio from relative transmitted PAR - function and parameter values according to Escobar et al (2009) (Agricultural and Forest Meteorology, 149(8), 1244-1253)</p>
+<dd><p>Calculate Red:Far red ratio from relative transmitted PAR - function and parameter values according to Escobar et al (2009) 
+(Agricultural and Forest Meteorology, 149(8), 1244-1253)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>relI0</strong> (<em>array</em>) – A 3D grid for relative transmitted PAR radiation</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>“res_rfr: ” : array</p></li>
+</ul>
+</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">

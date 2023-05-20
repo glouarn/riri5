@@ -1,8 +1,13 @@
 '''
 
- RIRI5: A 3D Turbid medium model adapted from RATP model- simplified for a  5 directions sky turtle(diffuse light only) 
+ RIRI5: A 3D Turbid medium model adapted from RATP model- simplified for a  5 directions sky turtle 
  ******************************
  Authors: G. Louarn / D. Combes - Mai 2014
+ 
+ - Considers diffuse light only (soc / uoc)
+ - Considers beam elevations of a minimal hemispheric turtle with 6 faces: 1 vertical direction + 1 elevation ring
+ - Considers only beams crossing by voxel diagonals into (x,y) and (y,z) planes : 1 vertical beam + 4 for diagonal beams = 5 directions sampled
+ - This imposes a voxel size and a 3D drid respecting : dx = dy = dz/tan(0.4637) = 2*dz
  
 
 '''
@@ -16,8 +21,8 @@ from copy import deepcopy
 import numpy as np
 
 
-def def_na_lims(pattern8, dz_ini, Hmax,opt='3D'):
-    """ Calculate the number of voxels per direction and the limits of the voxels in a 3D grid respecting the ratio 2 asumption, given a pattern8, dz_ini and Hmax (in cm) 
+def def_na_lims(pattern8, dz_ini, Hmax, opt='3D', unit='cm'):
+    """ Calculate the number of voxels per direction and the limits of the voxels in a 3D grid respecting the ratio asumption of RIRI5, given a pattern8, dz_ini and Hmax 
     
     :param pattern8: A list of two [x,y] coordinates setting the upper corner and lower corner of the scene/grid
     :type pattern8: list
@@ -27,6 +32,8 @@ def def_na_lims(pattern8, dz_ini, Hmax,opt='3D'):
     :type Hmax: float
     :param opt: either '3D' for a 3D grid or '1D' for a vertical one dimention grid
     :type opt: string
+    :param unit: unit used for input lengths : either 'cm' or 'm'
+    :type unit: string
     
     :return:
         * "number of voxels" : [nx, ny, nz]
@@ -58,7 +65,10 @@ def def_na_lims(pattern8, dz_ini, Hmax,opt='3D'):
     dxyz = [dxa,dya,dza]
     origin_grid = array([pattern8[0][0], pattern8[0][1],zlims[-1]])
     
-    surf_refVOX = dxa*dya/10000.#m2
+    if unit=='cm':
+        surf_refVOX = dxa*dya/10000.#m2
+    else:
+        surf_refVOX = dxa*dya #suppose m
     
     return na, dxyz, lims, origin_grid, surf_refVOX
 
@@ -113,7 +123,20 @@ def WhichVoxel(p, origin_grid, na, dxyz):
 
 
 def get_tripletY(ydeb, x, ny, nz, sens='+'):
-    """ List of triplet voxel IDs for beams in Y plane 
+    """ List of triplet voxel IDs for beams in Y plane (y,z)
+    
+    :param ydeb: initial beam position, ID along y
+    :type ydeb: integer
+    :param x: x voxel ID
+    :type x: integer
+    :param ny: number of voxels along y in the plane
+    :type ny: integer
+    :param nz: number of voxels along z in the plane
+    :type nz: integer
+    :param sens: Direction of the diagonal beams with respect to vertical; either '+' or '-' 
+    :type sens: string
+    
+    :return: A list of 3 lists with voxel indices [zz, yy, xx] of the beams path
     
     """
     #""" pour un plan dans y, rayon allant dans le + ou le - """
@@ -150,7 +173,21 @@ def get_tripletY(ydeb, x, ny, nz, sens='+'):
 
 #utilise un count (initialiser avec y deb) et meme demarche
 def get_tripletX(xdeb, y, nx, nz, sens='+'):
-    """ List of triplet voxel IDs for beams in X plane
+    """ List of triplet voxel IDs for beams in X plane (x,z)
+    
+    :param xdeb: initial beam position, ID along x
+    :type xdeb: integer
+    :param y: y voxel ID
+    :type y: integer
+    :param nx: number of voxels along x in the plane
+    :type nx: integer
+    :param nz: number of voxels along z in the plane
+    :type nz: integer
+    :param sens: Direction of the diagonal beams with respect to vertical; either '+' or '-' 
+    :type sens: string
+    
+    :return: A list of 3 lists with voxel indices [zz, yy, xx] of the beams path
+    
     
     """
     #""" pour un plan dans y, rayon allant dans le + ou le - """
@@ -186,6 +223,15 @@ def get_tripletX(xdeb, y, nx, nz, sens='+'):
 def get_tripletVert(x,y,nz):
     """ List of triplet voxel IDs for vertical beams
     
+    :param x: x voxel ID
+    :type x: integer
+    :param y: y voxel ID
+    :type y: integer
+    :param nz: number of voxels along z in the plane
+    :type nz: integer
+    
+    :return: A list of 3 lists with voxel indices [zz, yy, xx] of the beams path
+    
     """
     #""" pour triplets verticaux """
     
@@ -198,6 +244,13 @@ def get_tripletVert(x,y,nz):
 
 def get_ls_triplets(mat, opt='VXpXmYpYm'):
     """ List of triplet voxel IDs for all beams in X plane, Y plane and vertical direction
+    
+    :param mat: a 3D grid of format
+    :type mat: array
+    :param opt: A string to indicate which beam direction to be considered; either 'VXpXmYpYm' (5 directions) or 'V' (vertical beam only)
+    :type opt: string
+    
+    :return: A list of 3 lists with voxel indices [zz, yy, xx] of the beams path
     
     """
     #""" liste de triplets par direction; V= vertical; Xp,Yp,Xm,Ym 4 rayons a 45 degre dans le plan normal aux faces des voxels"""
@@ -235,9 +288,9 @@ def get_ls_triplets(mat, opt='VXpXmYpYm'):
 def k_teta_DC(mean_incl, elevations=[9.23,10.81,26.57,31.08,47.41,52.62,69.16,90]):
     """ Computes extinction coefficient from mean elevation angle according to SIRASCA model (p210-211, "Crop stucture and light microclimate" book)
     
-        :param mean_incl: mean elevation angle of leaves (degres)
+        :param mean_incl: mean elevation angle of leaves (degree)
         :type mean_incl: float
-        :param elevations: list of elevation classes to consider for discretisation (degres)
+        :param elevations: list of beam elevation classes to consider for integration (degres); default=elevation for turtle with 46 directions
         :type elevations: list
         
         :return: A list of ...
@@ -274,8 +327,15 @@ def k_teta_DC(mean_incl, elevations=[9.23,10.81,26.57,31.08,47.41,52.62,69.16,90
 
 
 def k_teta_distf(teta_beam, dist_class_teta_f):
-    """ Computes extinction coefficient for a given beam integrating ditribution of leaf area into leaf elevation classes
+    """ Computes extinction coefficient for a given beam integrating the ditribution of leaf area of a species into leaf elevation classes
     
+        :param teta_beam: Beam elevation with respect to horizontal plane (degree)
+        :type teta_beam: float
+        :param dist_class_teta_f: relative distribution of leaf area in elevation classes ; 9 classes in degrees, with centers [5,15,25,35,45,55,65,75,85]
+        :type dist_class_teta_f: list
+        
+        :return: Calculated extinction coefficient
+        
     """
     #""" pour tenir compte d'une distribution d'incli quelconque """
     
@@ -292,9 +352,20 @@ def k_teta_distf(teta_beam, dist_class_teta_f):
 
 
 
-def disttetaf(mf, sdf, nbs=10000,seed=0):
-    """ Distribute normal leaf angle ditribution into discrete regular elevation classes - A python version of 'dist_tetaf.r'
+def disttetaf(mf, sdf, nbs=10000, seed=0):
+    """ Distribute leaf angle normal ditribution into discrete regular elevation classes - A python version of 'dist_tetaf.r'
     
+        :param mf: mean elevation (degre)
+        :type mf: float
+        :param sdf: stadard deviation of the normal distribution (degree)
+        :type sdf: float
+        :param nbs: number of random drawings to generate de districution
+        :type nbs: integer
+        :param seed: seed number for the random number generator
+        :type seed: integer
+        
+        :return: A list with relative leaf area distribution in 9 elevation angle classes : [5,15,25,35,45,55,65,75,85]
+        
     """
     
     #""" python version of dist_tetaf.r"""
@@ -304,7 +375,7 @@ def disttetaf(mf, sdf, nbs=10000,seed=0):
     #n = 100#00
     #seed = 0
     
-    #random.seed(seed)
+    #np.random.seed(seed)
     x = np.random.normal(loc=mf, scale=sdf, size=nbs) #numpy.random.normal
     x
     x[x<0] = -x[x<0]
@@ -321,6 +392,17 @@ def disttetaf(mf, sdf, nbs=10000,seed=0):
 def calc_extinc_ray_multi(ls_vlai, I0, ls_k):
     """ Calculate light extinction and absoption per species for a beam going through a series of voxels
     
+        :param ls_vlai: List of partial LAI (Leaf Are Index, unit: m2.m-2) per species for the series of voxels crossed by the beam
+        :type ls_vlai: array
+        :param I0: Incoming light from the beam angular sector (unit: )
+        :type I0: float
+        :param ls_k: List of extinction coefficients per species (unitless)
+        :type ls_k: array
+        
+        :return:
+            * "res_trans: " : array
+            * "res_abs_i: " : list of arrays
+        
     """
     
     #""" calcul extinction (profil de Iout) et absorption par espece pour un rayon traversant une serie de voxel en serie decrite par profils de LAI (du haut en bas) et k """
@@ -362,12 +444,27 @@ def calc_extinc_ray_multi(ls_vlai, I0, ls_k):
 def calc_extinc_allray_multi(ls_mlai, ls_triplets_dir ,ls_distf , I0, optsky=None):
     """ Calculate light extinction and absoption per species for a series of beams 
     
+        :param ls_mlai: List of 3D grids for LAI distribution (Leaf Are Index, unit: m2.m-2) per species
+        :type ls_mlai: list
+        :param ls_triplets_dir: List of list of triplet voxel indices [zz, yy, xx] for the different beam directions considered
+        :type ls_triplets_dir: list of 
+        :param ls_distf: List of dist_class_teta_f (relative distribution of leaf area in elevation classes) by species
+        :type ls_distf: list
+        :param I0: Incoming light (unit: )
+        :type I0: float
+        :param optsky: Option for diffuse sky, relative light distribution with elevation angle; either 'soc' or 'uoc'
+        :type optsky: string
+        
+        :return:
+            * "res_trans: " : array
+            * "res_abs_i: " : list of arrays
+        
     """
     #""" calcul extinction (profil de Iout) et absorption par espece pour des liste de voxel, regroupe par direction """
     #""" presupose que ls_triplets tout ou partie d'un turtle 6 => dx=dy=dz / tan(0.4637) = 2*dz !"""
     ##res = deepcopy(ls_triplets_dir) #liste des triplets de voxel par direction, associe a res_trans et res_abs_i
 
-    alfa_turtle6 = 0.4637 #radians / 26.57 degre
+    alfa_turtle6 = 0.4637 #radians / 26.57 degree
     # distribution de I0 entre sources
     n_dir = len(ls_triplets_dir)
     if optsky==None or n_dir<5: #cas par defaut = toutes directions le meme poids / a utiliser notamment qd veut tester une seule dir
@@ -419,6 +516,23 @@ def calc_extinc_allray_multi(ls_mlai, ls_triplets_dir ,ls_distf , I0, optsky=Non
 def calc_extinc_allray_multi_reduced(ls_mlai, ls_triplets_dir, ls_distf, I0, optsky=None, opt='VXpXmYpYm'):
     """ Calculate light extinction and absoption per species for a series of beams, avoiding calculation in empty voxels above the canopy
     
+        :param ls_mlai: List of 3D grids for LAI distribution (Leaf Are Index, unit: m2.m-2) per species
+        :type ls_mlai: list
+        :param ls_triplets_dir: List of list of triplet voxel indices [zz, yy, xx] for the different beam directions considered
+        :type ls_triplets_dir: list of 
+        :param ls_distf: List of dist_class_teta_f (relative distribution of leaf area in elevation classes) by species
+        :type ls_distf: list
+        :param I0: Incoming light (unit: )
+        :type I0: float
+        :param optsky: Option for diffuse sky, relative light distribution with elevation angle; either 'soc' or 'uoc'
+        :type optsky: string
+        :param opt: A string to indicate which beam direction to be considered; either 'VXpXmYpYm' (5 directions) or 'V' (vertical beam only)
+        :type opt: string
+        
+        :return:
+            * "res_trans: " : array
+            * "res_abs_i: " : list of arrays
+    
     """
 
     # combien/quelles lignes a zeros de LAI au dessus
@@ -468,14 +582,21 @@ def schnute(x,a,b,c,d,x1,x2):
     return Y
 
 def rfr_calc_relatif(relI0,a=3.09,b=1.59,c=0,d=1.12,x1=0.,x2=2.):
-    """ Calculate Red:Far red ratio from relative transmitted PAR - function and parameter values according to Escobar et al (2009) (Agricultural and Forest Meteorology, 149(8), 1244-1253)
+    """ Calculate Red:Far red ratio from relative transmitted PAR - function and parameter values according to Escobar et al (2009) 
+        (Agricultural and Forest Meteorology, 149(8), 1244-1253)
     
+        :param relI0: A 3D grid for relative transmitted PAR radiation
+        :type relI0: array
+    
+        :return:
+            * "res_rfr: " : array
     """
     
     #"""calcul du ratio rouge clair:rouge sombre narrowband a partir du PAR transmis relatif par rapport au rayonnement incident (relI0)
     #les parametres par defaut a=3.09,b=1.59,c=0,d=1.12,x1=0.,x2=2. de la fonction schnute sont ajustes sur un couvert de sorgho, 
     #Escobar et al 2009 - Agricultural and Forest Meteorology, 149(8), 1244-1253  """
-    return schnute(relI0,a,b,c,d,x1,x2)
+    res_rfr = schnute(relI0,a,b,c,d,x1,x2)
+    return res_rfr
 
 #applique a la matrice des transmis res_trans_form
 #res_rfr = rfr_calc_relatif(res_trans_form)
