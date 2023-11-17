@@ -31,7 +31,7 @@ To install and use *RIRI5*, you need first to install the dependencies.
 3) Install *riri5*
     1) Git console :
         ```bash
-        git clone -b Develop https://github.com/glouarn/riri5.git
+        git clone https://github.com/glouarn/riri5.git
         ```
     2) installation in the conda environment (in folder `riri5`)
         ```bash
